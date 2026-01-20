@@ -48,6 +48,18 @@ export default function AboutSection() {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="bg-[#1a1a2e]/50 border border-white/10 rounded-xl p-8 text-center backdrop-blur-sm"
             >
+                {/* Profile Photo */}
+                <div className="mb-6">
+                    <img
+                        src="/profile.jpg"
+                        alt={data.name}
+                        className="w-32 h-32 rounded-full mx-auto object-cover border-4 border-purple-400/30"
+                        onError={(e) => {
+                            (e.target as HTMLImageElement).style.display = 'none';
+                        }}
+                    />
+                </div>
+
                 <p className="text-gray-300 leading-relaxed mb-6">
                     Hey! I&apos;m <span className="text-purple-400 font-semibold">{data.name}</span>, {data.bio}
                 </p>
