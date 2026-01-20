@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 
@@ -14,7 +14,7 @@ interface Project {
     image_url: string;
 }
 
-const containerVariants = {
+const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
         opacity: 1,
@@ -25,12 +25,12 @@ const containerVariants = {
     },
 };
 
-const cardVariants = {
+const cardVariants: Variants = {
     hidden: { opacity: 0, y: 50 },
     visible: {
         opacity: 1,
         y: 0,
-        transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] as const },
+        transition: { duration: 0.6 },
     },
 };
 
@@ -96,7 +96,7 @@ export default function ProjectsSection() {
                             <p className="text-sm text-gray-400 leading-relaxed">{project.description}</p>
 
                             <div className="flex flex-wrap gap-1.5">
-                                {project.tech.map(tech => (
+                                {project.tech && project.tech.map(tech => (
                                     <span
                                         key={tech}
                                         className="text-xs px-2 py-1 bg-purple-400/10 text-purple-400 rounded font-mono"
