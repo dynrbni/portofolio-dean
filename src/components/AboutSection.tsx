@@ -48,12 +48,15 @@ export default function AboutSection() {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="bg-[#1a1a2e]/50 border border-white/10 rounded-xl p-8 text-center backdrop-blur-sm"
             >
-                {/* Profile Photo */}
-                <div className="mb-6">
+                {/* Profile Photo with Animated Ring */}
+                <div className="mb-6 relative inline-block">
+                    {/* Animated rotating ring */}
+                    <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-purple-500 via-blue-500 to-purple-500 animate-spin opacity-75" style={{ animationDuration: '3s' }} />
+                    {/* Photo */}
                     <img
                         src="/profile.jpg"
                         alt={data.name}
-                        className="w-32 h-32 rounded-full mx-auto object-cover border-4 border-purple-400/30"
+                        className="w-32 h-32 rounded-full mx-auto object-cover border-4 border-[#1a1a2e] relative z-10"
                         onError={(e) => {
                             (e.target as HTMLImageElement).style.display = 'none';
                         }}
