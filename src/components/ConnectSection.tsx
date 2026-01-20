@@ -26,14 +26,14 @@ export default function ConnectSection() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.8 }}
-            className="py-24 px-5 max-w-5xl mx-auto text-center"
+            className="py-24 px-5 max-w-4xl mx-auto text-center"
         >
             <motion.h2
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
-                className="text-3xl font-bold font-mono mb-12"
+                className="text-2xl font-bold font-mono mb-12"
             >
                 <span className="text-purple-400">&lt;</span>
                 {' '}GitHub{' '}
@@ -55,7 +55,7 @@ export default function ConnectSection() {
                     />
                 </div>
                 <p className="text-gray-500 text-base mt-4 font-mono">
-                    <span className="text-green-400 font-semibold text-lg">{data.contributions}</span> contributions in the last year
+                    <span className="text-green-400 font-semibold text-l">{data.contributions}</span> contributions in the last year
                 </p>
             </motion.div>
         </motion.section>
