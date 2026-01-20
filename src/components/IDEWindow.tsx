@@ -113,24 +113,26 @@ export default function IDEWindow() {
                     <span className="w-3 h-3 rounded-full bg-green-400" />
                 </div>
 
-                {/* File Tabs */}
-                <div className="flex gap-1 flex-wrap">
-                    {files.map((file, index) => (
-                        <button
-                            key={file.name}
-                            onClick={() => handleTabClick(index)}
-                            className={`px-3 py-1.5 text-xs font-mono rounded-t-md transition-all flex items-center gap-1.5 relative
+                {/* File Tabs - Horizontal scroll on mobile */}
+                <div className="flex-1 overflow-x-auto scrollbar-hide">
+                    <div className="flex gap-1 min-w-max">
+                        {files.map((file, index) => (
+                            <button
+                                key={file.name}
+                                onClick={() => handleTabClick(index)}
+                                className={`px-3 py-1.5 text-xs font-mono rounded-t-md transition-all flex items-center gap-1.5 shrink-0 whitespace-nowrap
                 ${activeFile === index
-                                    ? 'text-white bg-[#1e1e2e] border-b-2 border-purple-400'
-                                    : 'text-gray-500 hover:text-gray-300 hover:bg-white/5'
-                                }`}
-                        >
-                            <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="#f1e05a">
-                                <path d="M3 3h18v18H3V3z" />
-                            </svg>
-                            {file.name}
-                        </button>
-                    ))}
+                                        ? 'text-white bg-[#1e1e2e] border-b-2 border-purple-400'
+                                        : 'text-gray-500 hover:text-gray-300 hover:bg-white/5'
+                                    }`}
+                            >
+                                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="#f1e05a">
+                                    <path d="M3 3h18v18H3V3z" />
+                                </svg>
+                                {file.name}
+                            </button>
+                        ))}
+                    </div>
                 </div>
             </div>
 
