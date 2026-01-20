@@ -9,7 +9,7 @@ export const files = [
                 { text: '.', class: 'punctuation' },
                 { text: 'log', class: 'function' },
                 { text: '(', class: 'bracket' },
-                { text: '"Hello World to My Portofolio! 👋"', class: 'string' },
+                { text: '"Hello, Welcome to My Portofolio! 👋"', class: 'string' },
                 { text: ')', class: 'bracket' },
                 { text: ';', class: 'punctuation' },
             ],
@@ -121,7 +121,7 @@ export const files = [
                 { text: '"PostgreSQL"', class: 'string' },
                 { text: ',', class: 'punctuation' },
                 { text: ' ', class: '' },
-                { text: '"MySQL"', class: 'string' },
+                { text: '"and many more"', class: 'string' },
             ],
             [
                 { text: ']', class: 'bracket' },
