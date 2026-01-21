@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
+import { BorderBeam } from "@/components/ui/border-beam";
 
 interface AboutData {
     name: string;
@@ -48,18 +49,20 @@ export default function AboutSection() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="mb-8 relative inline-block"
+                className="mb-8 relative inline-block rounded-full p-1"
             >
-                {/* Animated ring */}
-                <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-purple-500 via-blue-500 to-purple-500 animate-spin opacity-60" style={{ animationDuration: '4s' }} />
                 <img
                     src="/profile.jpg"
                     alt={data.name}
-                    className="w-28 h-28 rounded-full object-cover border-4 border-[#0d0d1a] relative z-10"
+                    className="w-28 h-28 rounded-full object-cover border-4 border-[#0d0d1a] relative z-10 bg-[#0d0d1a]"
                     onError={(e) => {
                         (e.target as HTMLImageElement).style.display = 'none';
                     }}
                 />
+
+                {/* Dual Border Beams */}
+                <BorderBeam size={80} duration={3} delay={0} colorFrom="#a855f7" colorTo="#3b82f6" />
+                <BorderBeam size={80} duration={3} delay={1.5} colorFrom="#ec4899" colorTo="#a855f7" reverse />
             </motion.div>
 
             {/* Bio */}
