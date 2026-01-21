@@ -36,7 +36,7 @@ export default function ConnectSection() {
                 className="text-2xl font-bold font-mono mb-12"
             >
                 <span className="text-purple-400">&lt;</span>
-                {' '}GitHub{' '}
+                {' '}github{' '}
                 <span className="text-purple-400">/&gt;</span>
             </motion.h2>
 
@@ -45,15 +45,19 @@ export default function ConnectSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="mb-12"
+                className="mb-6"
             >
-                <div className="bg-[#161b22] p-6 rounded-2xl inline-block w-full">
-                    <img
-                        src={`https://ghchart.rshah.org/22c55e/${data.github_username}`}
-                        alt="GitHub Contributions"
-                        className="w-full max-w-4xl mx-auto rounded-lg invert brightness-[0.85] hue-rotate-180"
-                    />
+                {/* Contribution Graph - scrollable on mobile */}
+                <div className="overflow-x-auto pb-4">
+                    <div className="min-w-[700px] md:min-w-0">
+                        <img
+                            src={`https://ghchart.rshah.org/22c55e/${data.github_username}`}
+                            alt="GitHub Contributions"
+                            className="w-full mx-auto brightness-[0.85] invert hue-rotate-180 saturate-150"
+                        />
+                    </div>
                 </div>
+
                 <p className="text-gray-500 text-base mt-4 font-mono">
                     <span className="text-green-400 font-semibold text-l">{data.contributions}</span> contributions in the last year
                 </p>
@@ -61,3 +65,5 @@ export default function ConnectSection() {
         </motion.section>
     );
 }
+
+

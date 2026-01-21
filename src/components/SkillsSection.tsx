@@ -202,7 +202,7 @@ export default function SkillsSection() {
                 className="text-2xl font-bold font-mono mb-12"
             >
                 <span className="text-purple-400">&lt;</span>
-                {' '}Skills{' '}
+                {' '}skills{' '}
                 <span className="text-purple-400">/&gt;</span>
             </motion.h2>
 

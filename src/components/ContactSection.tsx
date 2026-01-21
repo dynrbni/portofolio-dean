@@ -14,6 +14,11 @@ interface ContactData {
 
 export default function ContactSection() {
     const [data, setData] = useState<ContactData | null>(null);
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        message: '',
+    });
 
     useEffect(() => {
         supabase.from('contact').select('*').single().then(({ data }) => {
@@ -22,6 +27,13 @@ export default function ContactSection() {
     }, []);
 
     if (!data) return null;
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        const subject = `Message from ${formData.name}`;
+        const body = `Name: ${formData.name}%0D%0AEmail: ${formData.email}%0D%0A%0D%0AMessage:%0D%0A${formData.message}`;
+        window.location.href = `mailto:${data.email}?subject=${encodeURIComponent(subject)}&body=${body}`;
+    };
 
     const socials = [
         {
@@ -72,17 +84,17 @@ export default function ContactSection() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.8 }}
-            className="py-24 px-5 max-w-2xl mx-auto text-center"
+            className="py-24 px-5 max-w-4xl mx-auto"
         >
             <motion.h2
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
-                className="text-2xl font-bold font-mono mb-6"
+                className="text-2xl font-bold font-mono mb-6 text-center"
             >
                 <span className="text-purple-400">&lt;</span>
-                {' '}Contact{' '}
+                {' '}contact{' '}
                 <span className="text-purple-400">/&gt;</span>
             </motion.h2>
 
@@ -91,46 +103,106 @@ export default function ContactSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="text-gray-400 mb-8"
+                className="text-gray-400 mb-10 text-center"
             >
-                Have a project in mind? Let&apos;s work together!
+                Send a message or connect with me through socials
             </motion.p>
 
-            <motion.a
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                href={`mailto:${data.email}`}
-                className="inline-flex items-center gap-3 px-5 py-2.5 bg-purple-500/10 border border-purple-500/30 rounded-lg text-purple-400 hover:bg-purple-500/20 hover:border-purple-500/50 transition-all font-mono text-sm mb-8"
-            >
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                    <polyline points="22,6 12,13 2,6" />
-                </svg>
-                {data.email}
-            </motion.a>
-
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                className="flex flex-wrap justify-center gap-3"
-            >
-                {socials.map((social) => (
-                    <a
-                        key={social.name}
-                        href={social.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all font-mono text-sm"
+            <div className="grid md:grid-cols-2 gap-8">
+                {/* Contact Form */}
+                <motion.form
+                    initial={{ opacity: 0, x: -30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    onSubmit={handleSubmit}
+                    className="space-y-4"
+                >
+                    <div>
+                        <input
+                            type="text"
+                            placeholder="Your Name"
+                            required
+                            value={formData.name}
+                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                            className="w-full px-4 py-4 bg-[#1e1e2e] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/30 transition-all"
+                        />
+                    </div>
+                    <div>
+                        <input
+                            type="email"
+                            placeholder="Email Address"
+                            required
+                            value={formData.email}
+                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                            className="w-full px-4 py-4 bg-[#1e1e2e] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/30 transition-all"
+                        />
+                    </div>
+                    <div>
+                        <textarea
+                            placeholder="Your Message"
+                            required
+                            rows={5}
+                            value={formData.message}
+                            onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                            className="w-full px-4 py-4 bg-[#1e1e2e] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/30 transition-all resize-none"
+                        />
+                    </div>
+                    <button
+                        type="submit"
+                        className="w-full py-4 border border-purple-500/50 rounded-xl text-purple-400 font-semibold flex items-center justify-center gap-2 hover:bg-purple-500/10 hover:border-purple-500 transition-all"
                     >
-                        {social.icon}
-                        {social.handle}
-                    </a>
-                ))}
-            </motion.div>
+                        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M22 2L11 13" />
+                            <path d="M22 2L15 22L11 13L2 9L22 2Z" />
+                        </svg>
+                        Send Message
+                    </button>
+                </motion.form>
+
+                {/* Direct Contact & Socials */}
+                <motion.div
+                    initial={{ opacity: 0, x: 30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                    className="space-y-6"
+                >
+                    {/* Direct Contact Card - hidden on mobile */}
+                    <div className="hidden md:block border border-white/10 rounded-xl p-6">
+                        <h3 className="text-white font-semibold mb-4">Direct Contact</h3>
+                        <a
+                            href={`mailto:${data.email}`}
+                            className="flex items-center gap-3 text-gray-400 hover:text-purple-400 transition-colors mb-3"
+                        >
+                            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                <polyline points="22,6 12,13 2,6" />
+                            </svg>
+                            {data.email}
+                        </a>
+                    </div>
+
+                    {/* Social Links */}
+                    <div className="border border-white/10 rounded-xl p-6">
+                        <h3 className="text-white font-semibold mb-4">Connect with me</h3>
+                        <div className="grid grid-cols-2 gap-3">
+                            {socials.map((social) => (
+                                <a
+                                    key={social.name}
+                                    href={social.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-2 px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 hover:border-purple-500/30 transition-all text-sm"
+                                >
+                                    {social.icon}
+                                    {social.name}
+                                </a>
+                            ))}
+                        </div>
+                    </div>
+                </motion.div>
+            </div>
         </motion.section>
     );
 }

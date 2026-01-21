@@ -61,7 +61,7 @@ export default function ProjectsSection() {
                 className="text-center text-2xl font-bold font-mono mb-12"
             >
                 <span className="text-purple-400">&lt;</span>
-                {' '}RecentProjects{' '}
+                {' '}recentProjects{' '}
                 <span className="text-purple-400">/&gt;</span>
             </motion.h2>
 

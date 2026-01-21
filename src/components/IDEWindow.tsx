@@ -111,7 +111,7 @@ export default function IDEWindow() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}
-                className="w-full max-w-[620px] bg-[#1e1e2e] rounded-xl overflow-hidden shadow-2xl relative"
+                className="w-[85%] sm:w-full max-w-[420px] sm:max-w-[620px] bg-[#1e1e2e] rounded-xl shadow-2xl relative mx-auto"
             >
                 {/* Glow */}
                 <div className="absolute inset-0 rounded-xl shadow-[0_0_30px_rgba(168,85,247,0.15)] pointer-events-none" />
@@ -148,9 +148,9 @@ export default function IDEWindow() {
                 </div>
 
                 {/* Code Editor */}
-                <div className="flex min-h-[220px] p-4 font-mono text-sm relative z-10">
-                    {/* Line Numbers */}
-                    <div className="pr-4 border-r border-white/5 text-right select-none min-w-[40px]">
+                <div className="flex min-h-[220px] p-3 sm:p-4 font-mono text-xs sm:text-sm relative z-10">
+                    {/* Line Numbers - hidden on very small screens */}
+                    <div className="pr-4 border-r border-white/5 text-right select-none min-w-[32px] hidden sm:block">
                         {displayedLines.map((_, i) => (
                             <div key={i} className="text-gray-600 leading-6">{i + 1}</div>
                         ))}
@@ -160,7 +160,7 @@ export default function IDEWindow() {
                     </div>
 
                     {/* Code Content */}
-                    <div className="pl-4 flex-1">
+                    <div className="pl-2 sm:pl-4 flex-1 overflow-x-auto">
                         {/* Completed lines - NO animation */}
                         {displayedLines.map((line, lineIndex) => (
                             <div key={`${key}-${lineIndex}`} className="leading-6 whitespace-pre">
@@ -202,16 +202,6 @@ export default function IDEWindow() {
                     </div>
                 </div>
 
-                {/* Progress bar */}
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white/5">
-                    <motion.div
-                        className="h-full bg-purple-400/50"
-                        initial={{ width: '0%' }}
-                        animate={{ width: '100%' }}
-                        transition={{ duration: 3 }}
-                        key={key}
-                    />
-                </div>
             </motion.div>
         </div>
     );

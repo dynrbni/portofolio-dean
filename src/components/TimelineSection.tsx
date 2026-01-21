@@ -32,7 +32,7 @@ export default function TimelineSection() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.8 }}
-            className="py-24 px-5 max-w-2xl mx-auto text-center"
+            className="py-24 px-5 max-w-3xl mx-auto text-center"
         >
             <motion.h2
                 initial={{ opacity: 0, y: 20 }}
@@ -42,7 +42,7 @@ export default function TimelineSection() {
                 className="text-2xl font-bold font-mono mb-12"
             >
                 <span className="text-purple-400">&lt;</span>
-                {' '}Journey{' '}
+                {' '}journeyOfCode{' '}
                 <span className="text-purple-400">/&gt;</span>
             </motion.h2>
 

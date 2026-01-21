@@ -27,57 +27,68 @@ export default function AboutSection() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.8 }}
-            className="py-32 px-5 max-w-3xl mx-auto"
+            className="py-24 px-5 max-w-3xl mx-auto text-center"
         >
+            {/* Title */}
             <motion.h2
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="text-2xl font-bold font-mono text-center mb-12"
+                transition={{ duration: 0.5 }}
+                className="text-2xl font-bold font-mono mb-12"
             >
                 <span className="text-purple-400">&lt;</span>
-                {' '}AboutMe{' '}
+                {' '}aboutMe{' '}
                 <span className="text-purple-400">/&gt;</span>
             </motion.h2>
 
+            {/* Profile Photo */}
             <motion.div
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="mb-8 relative inline-block"
+            >
+                {/* Animated ring */}
+                <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-purple-500 via-blue-500 to-purple-500 animate-spin opacity-60" style={{ animationDuration: '4s' }} />
+                <img
+                    src="/profile.jpg"
+                    alt={data.name}
+                    className="w-28 h-28 rounded-full object-cover border-4 border-[#0d0d1a] relative z-10"
+                    onError={(e) => {
+                        (e.target as HTMLImageElement).style.display = 'none';
+                    }}
+                />
+            </motion.div>
+
+            {/* Bio */}
+            <motion.p
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="bg-[#1a1a2e]/50 border border-white/10 rounded-xl p-8 text-center backdrop-blur-sm"
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="text-gray-400 leading-relaxed mb-8 max-w-lg mx-auto"
             >
-                {/* Profile Photo with Animated Ring */}
-                <div className="mb-6 relative inline-block">
-                    {/* Animated rotating ring */}
-                    <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-purple-500 via-blue-500 to-purple-500 animate-spin opacity-75" style={{ animationDuration: '3s' }} />
-                    {/* Photo */}
-                    <img
-                        src="/profile.jpg"
-                        alt={data.name}
-                        className="w-32 h-32 rounded-full mx-auto object-cover border-4 border-[#1a1a2e] relative z-10"
-                        onError={(e) => {
-                            (e.target as HTMLImageElement).style.display = 'none';
-                        }}
-                    />
-                </div>
+                Hey! I&apos;m <span className="text-purple-400 font-semibold">{data.name}</span>, {data.bio}
+            </motion.p>
 
-                <p className="text-gray-300 leading-relaxed mb-6">
-                    Hey! I&apos;m <span className="text-purple-400 font-semibold">{data.name}</span>, {data.bio}
-                </p>
-
-                <a
-                    href="/cv.pdf"
-                    download
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-[#1a1a2e] hover:bg-[#252540] border border-white/20 text-gray-300 hover:text-white text-sm font-medium rounded-lg transition-colors"
-                >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                    Download CV
-                </a>
-            </motion.div>
+            {/* Download CV Button */}
+            <motion.a
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                href="/cv.pdf"
+                download
+                className="inline-flex items-center gap-2 px-4 py-2 border border-white/20 rounded-lg text-gray-400 hover:text-white hover:border-purple-500/50 transition-all text-sm"
+            >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Download CV
+            </motion.a>
         </motion.section>
     );
 }
+
