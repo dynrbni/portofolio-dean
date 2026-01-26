@@ -1,23 +1,9 @@
 // Code files data with syntax highlighting
 export const files = [
     {
-        name: 'hello.js',
-        code: [
-            [{ text: '// Welcome to my portfolio!', class: 'comment' }],
-            [
-                { text: 'console', class: 'variable' },
-                { text: '.', class: 'punctuation' },
-                { text: 'log', class: 'function' },
-                { text: '(', class: 'bracket' },
-                { text: '"Hello, Welcome to My Portofolio! 👋"', class: 'string' },
-                { text: ')', class: 'bracket' },
-                { text: ';', class: 'punctuation' },
-            ],
-        ],
-    },
-    {
         name: 'aboutMe.js',
         code: [
+            [{ text: '// Welcome to my portfolio!', class: 'comment' }],
             [
                 { text: 'const', class: 'keyword' },
                 { text: ' ', class: '' },
@@ -65,104 +51,7 @@ export const files = [
                 { text: ':', class: 'punctuation' },
                 { text: ' ', class: '' },
                 { text: 'false', class: 'boolean-false' },
-            ],
-            [
-                { text: '}', class: 'bracket' },
-                { text: ';', class: 'punctuation' },
-            ],
-        ],
-    },
-    {
-        name: 'skills.js',
-        code: [
-            [
-                { text: 'const', class: 'keyword' },
-                { text: ' ', class: '' },
-                { text: 'skills', class: 'variable' },
-                { text: ' ', class: '' },
-                { text: '=', class: 'operator' },
-                { text: ' ', class: '' },
-                { text: '[', class: 'bracket' },
-            ],
-            [
-                { text: '  ', class: '' },
-                { text: '"React"', class: 'string' },
                 { text: ',', class: 'punctuation' },
-                { text: ' ', class: '' },
-                { text: '"Next.js"', class: 'string' },
-                { text: ',', class: 'punctuation' },
-            ],
-            [
-                { text: '  ', class: '' },
-                { text: '"React Native"', class: 'string' },
-                { text: ',', class: 'punctuation' },
-                { text: ' ', class: '' },
-                { text: '"Expo"', class: 'string' },
-                { text: ',', class: 'punctuation' },
-            ],
-            [
-                { text: '  ', class: '' },
-                { text: '"Express.js"', class: 'string' },
-                { text: ',', class: 'punctuation' },
-                { text: ' ', class: '' },
-                { text: '"Node.js"', class: 'string' },
-                { text: ',', class: 'punctuation' },
-            ],
-            [
-                { text: '  ', class: '' },
-                { text: '"TailwindCSS"', class: 'string' },
-                { text: ',', class: 'punctuation' },
-                { text: ' ', class: '' },
-                { text: '"TypeScript"', class: 'string' },
-                { text: ',', class: 'punctuation' },
-            ],
-            [
-                { text: '  ', class: '' },
-                { text: '"PostgreSQL"', class: 'string' },
-                { text: ',', class: 'punctuation' },
-                { text: ' ', class: '' },
-                { text: '"and many more"', class: 'string' },
-            ],
-            [
-                { text: ']', class: 'bracket' },
-                { text: ';', class: 'punctuation' },
-            ],
-        ],
-    },
-    {
-        name: 'contact.js',
-        code: [
-            [
-                { text: 'const', class: 'keyword' },
-                { text: ' ', class: '' },
-                { text: 'contact', class: 'variable' },
-                { text: ' ', class: '' },
-                { text: '=', class: 'operator' },
-                { text: ' ', class: '' },
-                { text: '{', class: 'bracket' },
-            ],
-            [
-                { text: '  ', class: '' },
-                { text: 'email', class: 'property' },
-                { text: ':', class: 'punctuation' },
-                { text: ' ', class: '' },
-                { text: '"deanrabbani20@gmail.com"', class: 'string' },
-                { text: ',', class: 'punctuation' },
-            ],
-            [
-                { text: '  ', class: '' },
-                { text: 'github', class: 'property' },
-                { text: ':', class: 'punctuation' },
-                { text: ' ', class: '' },
-                { text: '"@dynrbni"', class: 'string' },
-                { text: ',', class: 'punctuation' },
-            ],
-            [
-                { text: '  ', class: '' },
-                { text: 'available', class: 'property' },
-                { text: ':', class: 'punctuation' },
-                { text: ' ', class: '' },
-                { text: 'true', class: 'boolean-true' },
             ],
             [
                 { text: '}', class: 'bracket' },

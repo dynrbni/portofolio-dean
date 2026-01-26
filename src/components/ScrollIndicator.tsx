@@ -7,7 +7,7 @@ export default function ScrollIndicator() {
         <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 2, duration: 0.5 }}
+            transition={{ delay: 4, duration: 0.5 }}
             className="flex flex-col items-center gap-2 mt-10 text-gray-500 text-sm font-mono"
         >
             <span>Scroll to explore</span>

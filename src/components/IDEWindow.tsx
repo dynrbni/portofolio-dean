@@ -111,7 +111,7 @@ export default function IDEWindow() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}
-                className="w-[85%] sm:w-full max-w-[420px] sm:max-w-[620px] bg-[#1e1e2e] rounded-xl shadow-2xl relative mx-auto"
+                className="w-[100%] sm:w-full max-w-[500px] sm:max-w-[620px] bg-[#1e1e2e] rounded-xl shadow-2xl relative mx-auto"
             >
                 {/* Glow */}
                 <div className="absolute inset-0 rounded-xl shadow-[0_0_30px_rgba(168,85,247,0.15)] pointer-events-none" />
@@ -148,13 +148,13 @@ export default function IDEWindow() {
                 </div>
 
                 {/* Code Editor */}
-                <div className="flex min-h-[220px] p-3 sm:p-4 font-mono text-xs sm:text-sm relative z-10">
+                <div className="flex min-h-[245px] p-3 sm:p-4 font-mono text-xs sm:text-sm relative z-10">
                     {/* Line Numbers - hidden on very small screens */}
                     <div className="pr-4 border-r border-white/5 text-right select-none min-w-[32px] hidden sm:block">
                         {displayedLines.map((_, i) => (
                             <div key={i} className="text-gray-600 leading-6">{i + 1}</div>
                         ))}
-                        {isTyping && (
+                        {isTyping && currentChar > 0 && (
                             <div className="text-gray-600 leading-6">{displayedLines.length + 1}</div>
                         )}
                     </div>
@@ -201,7 +201,6 @@ export default function IDEWindow() {
                         )}
                     </div>
                 </div>
-
             </motion.div>
         </div>
     );

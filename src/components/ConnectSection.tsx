@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 
@@ -9,61 +9,105 @@ interface ConnectData {
     contributions: string;
 }
 
+const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.15,
+            delayChildren: 0.1,
+        },
+    },
+};
+
+const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.5, ease: 'easeOut' },
+    },
+};
+
 export default function ConnectSection() {
     const [data, setData] = useState<ConnectData | null>(null);
 
     useEffect(() => {
-        supabase.from('connect').select('*').single().then(({ data }) => {
-            if (data) setData(data);
+        supabase.from('connect').select('*').single().then(({ data: supabaseData }) => {
+            if (supabaseData) {
+                // Set initial data from Supabase
+                setData(supabaseData);
+
+                // Fetch real-time contributions with cache busting
+                fetch(`https://github-contributions-api.jogruber.de/v4/${supabaseData.github_username}?y=last&t=${Date.now()}`, { cache: 'no-store' })
+                    .then(res => res.json())
+                    .then(json => {
+                        if (json?.contributions) {
+                            // Calculate total manually to ensure accuracy
+                            const total = json.contributions.reduce((acc: number, day: any) => acc + day.count, 0);
+
+                            setData(prev => prev ? ({
+                                ...prev,
+                                contributions: total.toString()
+                            }) : null);
+                        }
+                    })
+                    .catch(err => console.error("Failed to fetch contributions:", err));
+            }
         });
     }, []);
 
     if (!data) return null;
 
     return (
-        <motion.section
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.8 }}
-            className="py-24 px-5 max-w-4xl mx-auto text-center"
-        >
-            <motion.h2
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-                className="text-2xl font-bold font-mono mb-12"
-            >
-                <span className="text-purple-400">&lt;</span>
-                {' '}github{' '}
-                <span className="text-purple-400">/&gt;</span>
-            </motion.h2>
-
+        <section className="py-24 px-5 max-w-4xl mx-auto text-center">
             <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="mb-6"
+                variants={containerVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: '-80px' }}
             >
-                {/* Contribution Graph - scrollable on mobile */}
-                <div className="overflow-x-auto pb-4">
-                    <div className="min-w-[700px] md:min-w-0">
-                        <img
-                            src={`https://ghchart.rshah.org/22c55e/${data.github_username}`}
-                            alt="GitHub Contributions"
-                            className="w-full mx-auto brightness-[0.85] invert hue-rotate-180 saturate-150"
-                        />
-                    </div>
-                </div>
+                <motion.h2
+                    variants={itemVariants}
+                    className="text-2xl font-bold font-mono mb-12"
+                >
+                    <span className="text-purple-400">&lt;</span>
+                    {' '}github{' '}
+                    <span className="text-purple-400">/&gt;</span>
+                </motion.h2>
 
-                <p className="text-gray-500 text-base mt-4 font-mono">
-                    <span className="text-green-400 font-semibold text-l">{data.contributions}</span> contributions in the last year
-                </p>
+                <motion.div
+                    variants={itemVariants}
+                    className="mb-6"
+                >
+                    {/* Contribution Graph - scrollable on mobile */}
+                    <div className="overflow-x-auto pb-4">
+                        <div className="min-w-[700px] md:min-w-0">
+                            <motion.img
+                                src={`https://ghchart.rshah.org/22c55e/${data.github_username}`}
+                                alt="GitHub Contributions"
+                                className="w-full mx-auto brightness-[0.85] invert hue-rotate-180 saturate-150"
+                                whileHover={{ scale: 1.02 }}
+                                transition={{ duration: 0.3 }}
+                            />
+                        </div>
+                    </div>
+
+                    <motion.p
+                        variants={itemVariants}
+                        className="text-gray-500 text-base mt-4 font-mono"
+                    >
+                        <motion.span
+                            className="text-green-400 font-semibold text-l inline-block"
+                            initial={{ scale: 1 }}
+                            whileInView={{ scale: [1, 1.1, 1] }}
+                            transition={{ duration: 0.5, delay: 0.5 }}
+                        >
+                            {data.contributions}
+                        </motion.span> contributions in the last year
+                    </motion.p>
+                </motion.div>
             </motion.div>
-        </motion.section>
+        </section>
     );
 }
-
-
