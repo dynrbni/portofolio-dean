@@ -16,11 +16,11 @@ export default function Home() {
   return (
     <LazyMotion features={domAnimation}>
       <main className="min-h-screen bg-[#0f0f17] overflow-x-hidden">
-        {/* Subtle gradient orbs */}
+        
         <div className="fixed top-1/4 -left-32 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl pointer-events-none" />
         <div className="fixed top-1/2 -right-32 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl pointer-events-none" />
 
-        {/* Hero Section */}
+        
         <m.section
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -31,28 +31,28 @@ export default function Home() {
           <ScrollIndicator />
         </m.section>
 
-        {/* About Section */}
+        
         <AboutSection />
 
-        {/* Skills Section */}
+        
         <SkillsSection />
 
-        {/* Timeline Section */}
+        
         <TimelineSection />
 
-        {/* Projects Section */}
+        
         <ProjectsSection />
 
-        {/* Testimonials Section */}
+        
         <TestimonialsSection />
 
-        {/* Connect Section */}
+        
         <ConnectSection />
 
-        {/* Contact Section */}
+        
         <ContactSection />
 
-        {/* Footer */}
+        
         <Footer />
       </main>
     </LazyMotion>

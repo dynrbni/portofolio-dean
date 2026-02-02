@@ -84,7 +84,7 @@ export default function ProjectsSection() {
                             transition={{ duration: 0.3 }}
                             className="bg-[#1a1a2e]/50 border border-white/10 rounded-xl overflow-hidden hover:border-purple-400/40 transition-colors backdrop-blur-sm group"
                         >
-                            {/* Project Image */}
+                            
                             <div className="h-40 bg-[#11111b] flex items-center justify-center overflow-hidden">
                                 {project.image_url ? (
                                     <motion.img

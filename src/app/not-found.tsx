@@ -25,7 +25,6 @@ export default function NotFound() {
         return () => clearInterval(timer);
     }, [fullCode]);
 
-    // Highlight syntax
     const highlightCode = (code: string) => {
         return code
             .replace(/const/g, '<span class="text-purple-400">const</span>')
@@ -44,7 +43,7 @@ export default function NotFound() {
                 transition={{ duration: 0.6 }}
                 className="text-center"
             >
-                {/* 404 Number */}
+                
                 <motion.h1
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -54,7 +53,7 @@ export default function NotFound() {
                     404
                 </motion.h1>
 
-                {/* Error Message */}
+                
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -72,7 +71,7 @@ export default function NotFound() {
                     </p>
                 </motion.div>
 
-                {/* Code Block with Typing Animation */}
+                
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -92,7 +91,7 @@ export default function NotFound() {
                     </pre>
                 </motion.div>
 
-                {/* Back Home Button */}
+                
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}

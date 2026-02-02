@@ -10,7 +10,6 @@ interface Skill {
     sort_order: number;
 }
 
-// Inline SVG components for icons not in Simple Icons
 const CssSvg = () => (
     <svg viewBox="0 0 24 24" className="w-12 h-12 fill-white opacity-60 group-hover:opacity-100 transition-all duration-300">
         <path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.565-2.438L1.5 0zm17.09 4.413L5.41 4.41l.213 2.622 10.125.002-.255 2.716h-6.64l.24 2.573h6.182l-.366 3.523-2.91.804-2.956-.81-.188-2.11h-2.61l.29 3.855L12 19.288l5.373-1.53L18.59 4.414z" />
@@ -29,10 +28,8 @@ const VsCodeSvg = () => (
     </svg>
 );
 
-// Mapping skill names to Simple Icons slugs (all white icons)
 const getIconUrl = (skillName: string) => {
     const iconMap: Record<string, string> = {
-        // Frontend
         'react': 'react',
         'next.js': 'nextdotjs',
         'nextjs': 'nextdotjs',
@@ -48,7 +45,6 @@ const getIconUrl = (skillName: string) => {
         'solidjs': 'solid',
         'remix': 'remix',
 
-        // Languages
         'typescript': 'typescript',
         'javascript': 'javascript',
         'js': 'javascript',
@@ -68,7 +64,6 @@ const getIconUrl = (skillName: string) => {
         'csharp': 'csharp',
         'dart': 'dart',
 
-        // Backend
         'node.js': 'nodedotjs',
         'nodejs': 'nodedotjs',
         'node': 'nodedotjs',
@@ -81,14 +76,12 @@ const getIconUrl = (skillName: string) => {
         'rails': 'rubyonrails',
         'graphql': 'graphql',
 
-        // CSS/Styling
         'tailwindcss': 'tailwindcss',
         'tailwind': 'tailwindcss',
         'bootstrap': 'bootstrap',
         'sass': 'sass',
         'scss': 'sass',
 
-        // Database
         'postgresql': 'postgresql',
         'postgres': 'postgresql',
         'mongodb': 'mongodb',
@@ -96,7 +89,6 @@ const getIconUrl = (skillName: string) => {
         'redis': 'redis',
         'prisma': 'prisma',
 
-        // Cloud/Services
         'firebase': 'firebase',
         'supabase': 'supabase',
         'vercel': 'vercel',
@@ -109,7 +101,6 @@ const getIconUrl = (skillName: string) => {
         'gcp': 'googlecloud',
         'googlecloud': 'googlecloud',
 
-        // Tools
         'git': 'git',
         'github': 'github',
         'docker': 'docker',
@@ -125,7 +116,6 @@ const getIconUrl = (skillName: string) => {
         'bun': 'bun',
         'deno': 'deno',
 
-        // Mobile
         'react native': 'react',
         'reactnative': 'react',
         'expo': 'expo',
@@ -134,15 +124,13 @@ const getIconUrl = (skillName: string) => {
         'ios': 'ios',
         'apple': 'apple',
 
-        // Desktop
         'electron': 'electron',
         'tauri': 'tauri',
 
-        // OS
         'linux': 'linux',
         'ubuntu': 'ubuntu',
 
-        // Other
+
         'redux': 'redux',
         'framer': 'framer',
         '.net': 'dotnet',
@@ -153,7 +141,6 @@ const getIconUrl = (skillName: string) => {
 
     const normalizedName = skillName.toLowerCase().trim();
 
-    // Special cases with inline SVGs
     if (normalizedName === 'css' || normalizedName === 'css3') {
         return 'CSS_SVG';
     }
@@ -223,7 +210,7 @@ export default function SkillsSection() {
                 whileInView="visible"
                 viewport={{ once: true, margin: '-80px' }}
             >
-                {/* Title */}
+                
                 <motion.h2
                     variants={titleVariants}
                     className="text-2xl font-bold font-mono mb-12"
@@ -233,7 +220,7 @@ export default function SkillsSection() {
                     <span className="text-purple-400">/&gt;</span>
                 </motion.h2>
 
-                {/* Icons grid - stagger animation */}
+                
                 <div className="flex flex-wrap justify-center gap-8">
                     {skills.map((skill) => {
                         const iconUrl = getIconUrl(skill.name);

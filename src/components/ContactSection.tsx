@@ -1,8 +1,9 @@
 'use client';
 
 import { motion, Variants } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
+import Toast from './ui/toast';
 
 interface ContactData {
     email: string;
@@ -66,6 +67,20 @@ export default function ContactSection() {
         email: '',
         message: '',
     });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [toast, setToast] = useState<{ message: string; type: 'success' | 'error'; isVisible: boolean }>({
+        message: '',
+        type: 'success',
+        isVisible: false,
+    });
+
+    const showToast = useCallback((message: string, type: 'success' | 'error') => {
+        setToast({ message, type, isVisible: true });
+    }, []);
+
+    const hideToast = useCallback(() => {
+        setToast(prev => ({ ...prev, isVisible: false }));
+    }, []);
 
     useEffect(() => {
         supabase.from('contact').select('*').single().then(({ data }) => {
@@ -75,11 +90,36 @@ export default function ContactSection() {
 
     if (!data) return null;
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const subject = `Message from ${formData.name}`;
-        const body = `Name: ${formData.name}%0D%0AEmail: ${formData.email}%0D%0A%0D%0AMessage:%0D%0A${formData.message}`;
-        window.location.href = `mailto:${data.email}?subject=${encodeURIComponent(subject)}&body=${body}`;
+        setIsSubmitting(true);
+
+        try {
+            const response = await fetch(`https://formsubmit.co/ajax/${data.email}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: formData.name,
+                    email: formData.email,
+                    message: formData.message,
+                    _subject: `Portfolio Message from ${formData.name}`,
+                }),
+            });
+
+            if (response.ok) {
+                setFormData({ name: '', email: '', message: '' });
+                showToast('Pesan berhasil dikirim! Terima kasih sudah menghubungi.', 'success');
+            } else {
+                throw new Error('Failed to send message');
+            }
+        } catch (error) {
+            showToast('Gagal mengirim pesan. Silakan coba lagi.', 'error');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const socials = [
@@ -126,143 +166,167 @@ export default function ContactSection() {
     ];
 
     return (
-        <section className="py-24 px-5 max-w-4xl mx-auto">
-            <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: '-80px' }}
-            >
-                <motion.h2
-                    variants={itemVariants}
-                    className="text-2xl font-bold font-mono mb-6 text-center"
+        <>
+            <section className="py-24 px-5 max-w-4xl mx-auto">
+                <motion.div
+                    variants={containerVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: '-80px' }}
                 >
-                    <span className="text-purple-400">&lt;</span>
-                    {' '}contact{' '}
-                    <span className="text-purple-400">/&gt;</span>
-                </motion.h2>
-
-                <motion.p
-                    variants={itemVariants}
-                    className="text-gray-400 mb-10 text-center"
-                >
-                    Send a message or connect with me through socials
-                </motion.p>
-
-                <div className="grid md:grid-cols-2 gap-8">
-                    {/* Contact Form */}
-                    <motion.form
-                        variants={formVariants}
-                        onSubmit={handleSubmit}
-                        className="space-y-4"
+                    <motion.h2
+                        variants={itemVariants}
+                        className="text-2xl font-bold font-mono mb-6 text-center"
                     >
-                        <motion.div whileFocus={{ scale: 1.01 }}>
-                            <input
-                                type="text"
-                                placeholder="Your Name"
-                                required
-                                value={formData.name}
-                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                className="w-full px-4 py-4 bg-[#1e1e2e] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/30 focus:shadow-[0_0_20px_rgba(168,85,247,0.15)] transition-all"
-                            />
-                        </motion.div>
-                        <motion.div whileFocus={{ scale: 1.01 }}>
-                            <input
-                                type="email"
-                                placeholder="Email Address"
-                                required
-                                value={formData.email}
-                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                className="w-full px-4 py-4 bg-[#1e1e2e] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/30 focus:shadow-[0_0_20px_rgba(168,85,247,0.15)] transition-all"
-                            />
-                        </motion.div>
-                        <motion.div whileFocus={{ scale: 1.01 }}>
-                            <textarea
-                                placeholder="Your Message"
-                                required
-                                rows={5}
-                                value={formData.message}
-                                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                                className="w-full px-4 py-4 bg-[#1e1e2e] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/30 focus:shadow-[0_0_20px_rgba(168,85,247,0.15)] transition-all resize-none"
-                            />
-                        </motion.div>
-                        <motion.button
-                            type="submit"
-                            whileHover={{
-                                scale: 1.02,
-                                boxShadow: '0 0 30px rgba(168, 85, 247, 0.3)',
-                            }}
-                            whileTap={{ scale: 0.98 }}
-                            className="w-full py-4 border border-purple-500/50 rounded-xl text-purple-400 font-semibold flex items-center justify-center gap-2 hover:bg-purple-500/10 hover:border-purple-500 transition-all"
-                        >
-                            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <path d="M22 2L11 13" />
-                                <path d="M22 2L15 22L11 13L2 9L22 2Z" />
-                            </svg>
-                            Send Message
-                        </motion.button>
-                    </motion.form>
+                        <span className="text-purple-400">&lt;</span>
+                        {' '}contact{' '}
+                        <span className="text-purple-400">/&gt;</span>
+                    </motion.h2>
 
-                    {/* Direct Contact & Socials */}
-                    <motion.div
-                        variants={socialVariants}
-                        className="space-y-6"
+                    <motion.p
+                        variants={itemVariants}
+                        className="text-gray-400 mb-10 text-center"
                     >
-                        {/* Direct Contact Card - hidden on mobile */}
-                        <motion.div
-                            className="hidden md:block border border-white/10 rounded-xl p-6 hover:border-purple-400/30 transition-colors"
-                            whileHover={{ boxShadow: '0 0 30px rgba(168, 85, 247, 0.1)' }}
+                        Send a message or connect with me through socials
+                    </motion.p>
+
+                    <div className="grid md:grid-cols-2 gap-8">
+                        
+                        <motion.form
+                            variants={formVariants}
+                            onSubmit={handleSubmit}
+                            className="space-y-4"
                         >
-                            <h3 className="text-white font-semibold mb-4">Direct Contact</h3>
-                            <motion.a
-                                whileHover={{ x: 5 }}
-                                href={`mailto:${data.email}`}
-                                className="flex items-center gap-3 text-gray-400 hover:text-purple-400 transition-colors mb-3"
+                            <motion.div whileFocus={{ scale: 1.01 }}>
+                                <input
+                                    type="text"
+                                    placeholder="Your Name"
+                                    required
+                                    value={formData.name}
+                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                    className="w-full px-4 py-4 bg-[#1e1e2e] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/30 focus:shadow-[0_0_20px_rgba(168,85,247,0.15)] transition-all"
+                                />
+                            </motion.div>
+                            <motion.div whileFocus={{ scale: 1.01 }}>
+                                <input
+                                    type="email"
+                                    placeholder="Email Address"
+                                    required
+                                    value={formData.email}
+                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                    className="w-full px-4 py-4 bg-[#1e1e2e] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/30 focus:shadow-[0_0_20px_rgba(168,85,247,0.15)] transition-all"
+                                />
+                            </motion.div>
+                            <motion.div whileFocus={{ scale: 1.01 }}>
+                                <textarea
+                                    placeholder="Your Message"
+                                    required
+                                    rows={5}
+                                    value={formData.message}
+                                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                                    className="w-full px-4 py-4 bg-[#1e1e2e] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/30 focus:shadow-[0_0_20px_rgba(168,85,247,0.15)] transition-all resize-none"
+                                />
+                            </motion.div>
+                            <motion.button
+                                type="submit"
+                                disabled={isSubmitting}
+                                whileHover={!isSubmitting ? {
+                                    scale: 1.02,
+                                    boxShadow: '0 0 30px rgba(168, 85, 247, 0.3)',
+                                } : {}}
+                                whileTap={!isSubmitting ? { scale: 0.98 } : {}}
+                                className={`w-full py-4 border border-purple-500/50 rounded-xl text-purple-400 font-semibold flex items-center justify-center gap-2 transition-all ${isSubmitting
+                                    ? 'opacity-70 cursor-not-allowed'
+                                    : 'hover:bg-purple-500/10 hover:border-purple-500'
+                                    }`}
                             >
-                                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                                    <polyline points="22,6 12,13 2,6" />
-                                </svg>
-                                {data.email}
-                            </motion.a>
-                        </motion.div>
+                                {isSubmitting ? (
+                                    <>
+                                        <svg className="w-5 h-5 animate-spin" viewBox="0 0 24 24" fill="none">
+                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                                        </svg>
+                                        Sending...
+                                    </>
+                                ) : (
+                                    <>
+                                        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                            <path d="M22 2L11 13" />
+                                            <path d="M22 2L15 22L11 13L2 9L22 2Z" />
+                                        </svg>
+                                        Send Message
+                                    </>
+                                )}
+                            </motion.button>
+                        </motion.form>
 
-                        {/* Social Links */}
+                        
                         <motion.div
-                            className="border border-white/10 rounded-xl p-6 hover:border-purple-400/30 transition-colors"
-                            whileHover={{ boxShadow: '0 0 30px rgba(168, 85, 247, 0.1)' }}
+                            variants={socialVariants}
+                            className="space-y-6"
                         >
-                            <h3 className="text-white font-semibold mb-4">Connect with me</h3>
+                            
                             <motion.div
-                                className="grid grid-cols-2 gap-3"
-                                variants={containerVariants}
-                                initial="hidden"
-                                whileInView="visible"
-                                viewport={{ once: true }}
+                                className="hidden md:block border border-white/10 rounded-xl p-6 hover:border-purple-400/30 transition-colors"
+                                whileHover={{ boxShadow: '0 0 30px rgba(168, 85, 247, 0.1)' }}
                             >
-                                {socials.map((social) => (
-                                    <motion.a
-                                        key={social.name}
-                                        variants={socialItemVariants}
-                                        whileHover={{
-                                            scale: 1.05,
-                                            boxShadow: '0 0 15px rgba(168, 85, 247, 0.2)',
-                                        }}
-                                        whileTap={{ scale: 0.98 }}
-                                        href={social.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex items-center gap-2 px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 hover:border-purple-500/30 transition-all text-sm"
-                                    >
-                                        {social.icon}
-                                        {social.name}
-                                    </motion.a>
-                                ))}
+                                <h3 className="text-white font-semibold mb-4">Direct Contact</h3>
+                                <motion.a
+                                    whileHover={{ x: 5 }}
+                                    href={`mailto:${data.email}`}
+                                    className="flex items-center gap-3 text-gray-400 hover:text-purple-400 transition-colors mb-3"
+                                >
+                                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                        <polyline points="22,6 12,13 2,6" />
+                                    </svg>
+                                    {data.email}
+                                </motion.a>
+                            </motion.div>
+
+                            
+                            <motion.div
+                                className="border border-white/10 rounded-xl p-6 hover:border-purple-400/30 transition-colors"
+                                whileHover={{ boxShadow: '0 0 30px rgba(168, 85, 247, 0.1)' }}
+                            >
+                                <h3 className="text-white font-semibold mb-4">Connect with me</h3>
+                                <motion.div
+                                    className="grid grid-cols-2 gap-3"
+                                    variants={containerVariants}
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    viewport={{ once: true }}
+                                >
+                                    {socials.map((social) => (
+                                        <motion.a
+                                            key={social.name}
+                                            variants={socialItemVariants}
+                                            whileHover={{
+                                                scale: 1.05,
+                                                boxShadow: '0 0 15px rgba(168, 85, 247, 0.2)',
+                                            }}
+                                            whileTap={{ scale: 0.98 }}
+                                            href={social.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center gap-2 px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 hover:border-purple-500/30 transition-all text-sm"
+                                        >
+                                            {social.icon}
+                                            {social.name}
+                                        </motion.a>
+                                    ))}
+                                </motion.div>
                             </motion.div>
                         </motion.div>
-                    </motion.div>
-                </div>
-            </motion.div>
-        </section>
+                    </div>
+                </motion.div>
+            </section>
+            <Toast
+                message={toast.message}
+                type={toast.type}
+                isVisible={toast.isVisible}
+                onClose={hideToast}
+            />
+        </>
     );
 }

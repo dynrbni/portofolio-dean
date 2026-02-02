@@ -52,7 +52,6 @@ export default function IDEWindow() {
         switchToFile(index);
     };
 
-    // Auto-cycle to next file
     useEffect(() => {
         if (!isTyping) {
             autoSwitchRef.current = setTimeout(() => {
@@ -65,7 +64,6 @@ export default function IDEWindow() {
         }
     }, [isTyping, activeFile, switchToFile]);
 
-    // Typing animation
     useEffect(() => {
         if (!isTyping) return;
 
@@ -97,7 +95,7 @@ export default function IDEWindow() {
 
     return (
         <div className="flex flex-col items-center">
-            {/* Title above IDE */}
+            
             <motion.h1
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -113,10 +111,10 @@ export default function IDEWindow() {
                 transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}
                 className="w-[100%] sm:w-full max-w-[500px] sm:max-w-[620px] bg-[#1e1e2e] rounded-xl shadow-2xl relative mx-auto"
             >
-                {/* Glow */}
+                
                 <div className="absolute inset-0 rounded-xl shadow-[0_0_30px_rgba(168,85,247,0.15)] pointer-events-none" />
 
-                {/* Header */}
+                
                 <div className="bg-[#181825] px-4 py-3 flex items-center gap-4 border-b border-white/5 relative z-10">
                     <div className="flex gap-2">
                         <span className="w-3 h-3 rounded-full bg-red-400" />
@@ -124,7 +122,7 @@ export default function IDEWindow() {
                         <span className="w-3 h-3 rounded-full bg-green-400" />
                     </div>
 
-                    {/* File Tabs - Horizontal scroll on mobile */}
+                    
                     <div className="flex-1 overflow-x-auto scrollbar-hide">
                         <div className="flex gap-1 min-w-max">
                             {files.map((file, index) => (
@@ -147,9 +145,9 @@ export default function IDEWindow() {
                     </div>
                 </div>
 
-                {/* Code Editor */}
+                
                 <div className="flex min-h-[245px] p-3 sm:p-4 font-mono text-xs sm:text-sm relative z-10">
-                    {/* Line Numbers - hidden on very small screens */}
+                    
                     <div className="pr-4 border-r border-white/5 text-right select-none min-w-[32px] hidden sm:block">
                         {displayedLines.map((_, i) => (
                             <div key={i} className="text-gray-600 leading-6">{i + 1}</div>
@@ -159,9 +157,9 @@ export default function IDEWindow() {
                         )}
                     </div>
 
-                    {/* Code Content */}
+                    
                     <div className="pl-2 sm:pl-4 flex-1 overflow-x-auto">
-                        {/* Completed lines - NO animation */}
+                        
                         {displayedLines.map((line, lineIndex) => (
                             <div key={`${key}-${lineIndex}`} className="leading-6 whitespace-pre">
                                 {line.map((token, tokenIndex) => (
@@ -172,7 +170,7 @@ export default function IDEWindow() {
                             </div>
                         ))}
 
-                        {/* Currently typing line */}
+                        
                         {isTyping && currentLineTokens && (
                             <div className="leading-6 whitespace-pre">
                                 {(() => {
@@ -193,7 +191,7 @@ export default function IDEWindow() {
                             </div>
                         )}
 
-                        {/* Cursor after done */}
+                        
                         {!isTyping && (
                             <div className="leading-6">
                                 <span className="inline-block w-2 h-4 bg-purple-400 rounded-sm animate-pulse" />

@@ -15,7 +15,6 @@ export default function AdminPage() {
     const [activeTab, setActiveTab] = useState('about');
     const [uploading, setUploading] = useState<string | null>(null);
 
-    // Data states
     const [about, setAbout] = useState({ id: '', name: '', age: '', bio: '' });
     const [skills, setSkills] = useState<Array<{ id: string; name: string; sort_order: number }>>([]);
     const [timeline, setTimeline] = useState<Array<{ id: string; year: string; title: string; description: string; sort_order: number }>>([]);
@@ -91,12 +90,10 @@ export default function AdminPage() {
 
         const imageUrl = `${SUPABASE_URL}/storage/v1/object/public/images/${fileName}`;
 
-        // Update project in state
         const p = [...projects];
         p[index].image_url = imageUrl;
         setProjects(p);
 
-        // Save to database immediately
         const { error: dbError } = await supabaseAdmin.from('projects').update({ image_url: imageUrl }).eq('id', projectId);
 
         if (dbError) {
@@ -118,24 +115,20 @@ export default function AdminPage() {
             supabaseAdmin.from('footer').update({ copyright: footer.copyright, message: footer.message }).eq('id', footer.id),
         ]);
 
-        // Update skills
         for (const item of skills) {
             if (item.id) {
                 await supabaseAdmin.from('skills').update({ name: item.name, sort_order: item.sort_order }).eq('id', item.id);
             }
         }
 
-        // Update timeline
         for (const item of timeline) {
             if (item.id) {
                 await supabaseAdmin.from('timeline').update({ year: item.year, title: item.title, description: item.description, sort_order: item.sort_order }).eq('id', item.id);
             }
         }
 
-        // Update projects
         for (const item of projects) {
             if (item.id) {
-                // Parse tech from techInput
                 const techArray = item.techInput ? item.techInput.split(',').map(s => s.trim()).filter(Boolean) : item.tech;
                 await supabaseAdmin.from('projects').update({ name: item.name, description: item.description, tech: techArray, github_url: item.github_url, live_url: item.live_url, image_url: item.image_url || '', sort_order: item.sort_order }).eq('id', item.id);
             }
@@ -146,7 +139,6 @@ export default function AdminPage() {
         setTimeout(() => setSaved(false), 2000);
     };
 
-    // Skills CRUD
     const addSkill = async () => {
         const { data } = await supabaseAdmin.from('skills').insert({ name: 'New Skill', sort_order: skills.length }).select().single();
         if (data) setSkills([...skills, data]);
@@ -157,7 +149,6 @@ export default function AdminPage() {
         setSkills(skills.filter(s => s.id !== id));
     };
 
-    // Timeline CRUD
     const addTimelineItem = async () => {
         const { data } = await supabaseAdmin.from('timeline').insert({ year: '', title: '', description: '', sort_order: timeline.length }).select().single();
         if (data) setTimeline([...timeline, data]);
@@ -168,7 +159,6 @@ export default function AdminPage() {
         setTimeline(timeline.filter(t => t.id !== id));
     };
 
-    // Projects CRUD
     const addProject = async () => {
         const { data } = await supabaseAdmin.from('projects').insert({ name: '', description: '', tech: [], github_url: '#', live_url: '#', image_url: '', sort_order: projects.length }).select().single();
         if (data) setProjects([...projects, { ...data, techInput: '' }]);
@@ -236,7 +226,7 @@ export default function AdminPage() {
                 </div>
 
                 <div className="bg-[#1a1a2e] border border-white/10 rounded-xl p-6">
-                    {/* About Tab */}
+                    
                     {activeTab === 'about' && (
                         <div className="space-y-4">
                             <h2 className="text-lg font-bold font-mono mb-4">About Me</h2>
@@ -255,7 +245,7 @@ export default function AdminPage() {
                         </div>
                     )}
 
-                    {/* Skills Tab */}
+                    
                     {activeTab === 'skills' && (
                         <div className="space-y-4">
                             <h2 className="text-lg font-bold font-mono mb-4">Skills</h2>
@@ -276,7 +266,7 @@ export default function AdminPage() {
                         </div>
                     )}
 
-                    {/* Timeline Tab */}
+                    
                     {activeTab === 'timeline' && (
                         <div className="space-y-4">
                             <h2 className="text-lg font-bold font-mono mb-4">Timeline / Journey</h2>
@@ -294,7 +284,7 @@ export default function AdminPage() {
                         </div>
                     )}
 
-                    {/* Projects Tab */}
+                    
                     {activeTab === 'projects' && (
                         <div className="space-y-4">
                             <h2 className="text-lg font-bold font-mono mb-4">Projects</h2>
@@ -304,7 +294,7 @@ export default function AdminPage() {
                                     <textarea value={project.description} onChange={(e) => { const p = [...projects]; p[index].description = e.target.value; setProjects(p); }} placeholder="Description" rows={2} className="w-full px-3 py-2 bg-[#1a1a2e] border border-white/10 rounded-lg text-white font-mono text-sm focus:outline-none focus:border-purple-400 resize-none" />
                                     <input type="text" value={project.techInput} onChange={(e) => { const p = [...projects]; p[index].techInput = e.target.value; setProjects(p); }} placeholder="Tech Stack (comma-separated, e.g: React, Node.js, Tailwind)" className="w-full px-3 py-2 bg-[#1a1a2e] border border-white/10 rounded-lg text-white font-mono text-sm focus:outline-none focus:border-purple-400" />
 
-                                    {/* Image Upload */}
+                                    
                                     <div>
                                         <label className="block text-xs text-gray-500 mb-2">🖼️ Project Screenshot</label>
                                         <div className="flex gap-3 items-start">
@@ -358,7 +348,7 @@ export default function AdminPage() {
                         </div>
                     )}
 
-                    {/* Connect Tab */}
+                    
                     {activeTab === 'connect' && (
                         <div className="space-y-4">
                             <h2 className="text-lg font-bold font-mono mb-4">GitHub Connect</h2>
@@ -373,7 +363,7 @@ export default function AdminPage() {
                         </div>
                     )}
 
-                    {/* Contact Tab */}
+                    
                     {activeTab === 'contact' && (
                         <div className="space-y-4">
                             <h2 className="text-lg font-bold font-mono mb-4">Contact Info</h2>
@@ -400,7 +390,7 @@ export default function AdminPage() {
                         </div>
                     )}
 
-                    {/* Footer Tab */}
+                    
                     {activeTab === 'footer' && (
                         <div className="space-y-4">
                             <h2 className="text-lg font-bold font-mono mb-4">Footer</h2>

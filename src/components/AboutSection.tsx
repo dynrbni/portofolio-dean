@@ -60,7 +60,7 @@ export default function AboutSection() {
                 viewport={{ once: true, margin: '-80px' }}
                 className="flex flex-col items-center"
             >
-                {/* Title */}
+                
                 <motion.h2
                     variants={itemVariants}
                     className="text-2xl font-bold font-mono mb-12"
@@ -70,7 +70,7 @@ export default function AboutSection() {
                     <span className="text-purple-400">/&gt;</span>
                 </motion.h2>
 
-                {/* Profile Photo */}
+                
                 <motion.div
                     variants={photoVariants}
                     className="mb-8 relative inline-block rounded-full p-1"
@@ -84,12 +84,12 @@ export default function AboutSection() {
                         }}
                     />
 
-                    {/* Dual Border Beams */}
+                    
                     <BorderBeam size={80} duration={3} delay={0} colorFrom="#a855f7" colorTo="#3b82f6" />
                     <BorderBeam size={80} duration={3} delay={1.5} colorFrom="#ec4899" colorTo="#a855f7" reverse />
                 </motion.div>
 
-                {/* Bio */}
+                
                 <motion.p
                     variants={itemVariants}
                     className="text-gray-400 leading-relaxed mb-8 max-w-lg mx-auto"
@@ -97,7 +97,7 @@ export default function AboutSection() {
                     Hey! I&apos;m <span className="text-purple-400 font-semibold">{data.name}</span>, {data.bio}
                 </motion.p>
 
-                {/* Download CV Button */}
+                
                 <motion.a
                     variants={itemVariants}
                     whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(168, 85, 247, 0.3)' }}

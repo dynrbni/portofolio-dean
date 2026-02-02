@@ -35,15 +35,12 @@ export default function ConnectSection() {
     useEffect(() => {
         supabase.from('connect').select('*').single().then(({ data: supabaseData }) => {
             if (supabaseData) {
-                // Set initial data from Supabase
                 setData(supabaseData);
 
-                // Fetch real-time contributions with cache busting
                 fetch(`https://github-contributions-api.jogruber.de/v4/${supabaseData.github_username}?y=last&t=${Date.now()}`, { cache: 'no-store' })
                     .then(res => res.json())
                     .then(json => {
                         if (json?.contributions) {
-                            // Calculate total manually to ensure accuracy
                             const total = json.contributions.reduce((acc: number, day: any) => acc + day.count, 0);
 
                             setData(prev => prev ? ({
@@ -80,7 +77,7 @@ export default function ConnectSection() {
                     variants={itemVariants}
                     className="mb-6"
                 >
-                    {/* Contribution Graph - scrollable on mobile */}
+                    
                     <div className="overflow-x-auto pb-4">
                         <div className="min-w-[700px] md:min-w-0">
                             <motion.img

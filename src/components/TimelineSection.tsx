@@ -46,7 +46,6 @@ export default function TimelineSection() {
     useEffect(() => {
         supabase.from('timeline').select('*').order('sort_order').then(({ data }) => {
             if (data) {
-                // Filter out empty entries (no title or year)
                 const filtered = data.filter(item => item.title && item.title.trim() !== '' && item.year && item.year.trim() !== '');
                 setTimeline(filtered);
             }
@@ -63,7 +62,7 @@ export default function TimelineSection() {
                 whileInView="visible"
                 viewport={{ once: true, margin: '-80px' }}
             >
-                {/* Title */}
+                
                 <motion.h2
                     variants={titleVariants}
                     className="text-2xl font-bold font-mono mb-12"
@@ -73,7 +72,7 @@ export default function TimelineSection() {
                     <span className="text-purple-400">/&gt;</span>
                 </motion.h2>
 
-                {/* Timeline Items */}
+                
                 <div className="flex flex-col gap-4">
                     {timeline.map((item) => (
                         <motion.div

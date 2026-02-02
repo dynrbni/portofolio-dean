@@ -1,4 +1,3 @@
-// Code files data with syntax highlighting
 export const files = [
     {
         name: 'aboutMe.js',
