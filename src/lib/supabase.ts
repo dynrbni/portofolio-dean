@@ -1,10 +1,10 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = 'https://ruzgfryrwudsjvhqragj.supabase.co';
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ1emdmcnlyd3Vkc2p2aHFyYWdqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4NzM2OTcsImV4cCI6MjA4NDQ0OTY5N30.x_2td5TuXoqvofr4MYC62uGm_cno-GTp8pgNBtBlrFI';
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-const supabaseServiceKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ1emdmcnlyd3Vkc2p2aHFyYWdqIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2ODg3MzY5NywiZXhwIjoyMDg0NDQ5Njk3fQ.NCHUqPIHAppDHBg2HjVKXLFHBg6sAPcS6AnizxHN7Wo';
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY!;
 
 export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);

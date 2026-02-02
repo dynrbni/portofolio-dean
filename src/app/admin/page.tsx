@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { supabaseAdmin } from '@/lib/supabase';
 
 const SECRET_KEY = 'deandean20';
-const SUPABASE_URL = 'https://ruzgfryrwudsjvhqragj.supabase.co';
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 
 export default function AdminPage() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -226,7 +226,7 @@ export default function AdminPage() {
                 </div>
 
                 <div className="bg-[#1a1a2e] border border-white/10 rounded-xl p-6">
-                    
+
                     {activeTab === 'about' && (
                         <div className="space-y-4">
                             <h2 className="text-lg font-bold font-mono mb-4">About Me</h2>
@@ -245,7 +245,7 @@ export default function AdminPage() {
                         </div>
                     )}
 
-                    
+
                     {activeTab === 'skills' && (
                         <div className="space-y-4">
                             <h2 className="text-lg font-bold font-mono mb-4">Skills</h2>
@@ -266,7 +266,7 @@ export default function AdminPage() {
                         </div>
                     )}
 
-                    
+
                     {activeTab === 'timeline' && (
                         <div className="space-y-4">
                             <h2 className="text-lg font-bold font-mono mb-4">Timeline / Journey</h2>
@@ -284,7 +284,7 @@ export default function AdminPage() {
                         </div>
                     )}
 
-                    
+
                     {activeTab === 'projects' && (
                         <div className="space-y-4">
                             <h2 className="text-lg font-bold font-mono mb-4">Projects</h2>
@@ -294,7 +294,7 @@ export default function AdminPage() {
                                     <textarea value={project.description} onChange={(e) => { const p = [...projects]; p[index].description = e.target.value; setProjects(p); }} placeholder="Description" rows={2} className="w-full px-3 py-2 bg-[#1a1a2e] border border-white/10 rounded-lg text-white font-mono text-sm focus:outline-none focus:border-purple-400 resize-none" />
                                     <input type="text" value={project.techInput} onChange={(e) => { const p = [...projects]; p[index].techInput = e.target.value; setProjects(p); }} placeholder="Tech Stack (comma-separated, e.g: React, Node.js, Tailwind)" className="w-full px-3 py-2 bg-[#1a1a2e] border border-white/10 rounded-lg text-white font-mono text-sm focus:outline-none focus:border-purple-400" />
 
-                                    
+
                                     <div>
                                         <label className="block text-xs text-gray-500 mb-2">🖼️ Project Screenshot</label>
                                         <div className="flex gap-3 items-start">
@@ -348,7 +348,7 @@ export default function AdminPage() {
                         </div>
                     )}
 
-                    
+
                     {activeTab === 'connect' && (
                         <div className="space-y-4">
                             <h2 className="text-lg font-bold font-mono mb-4">GitHub Connect</h2>
@@ -363,7 +363,7 @@ export default function AdminPage() {
                         </div>
                     )}
 
-                    
+
                     {activeTab === 'contact' && (
                         <div className="space-y-4">
                             <h2 className="text-lg font-bold font-mono mb-4">Contact Info</h2>
@@ -390,7 +390,7 @@ export default function AdminPage() {
                         </div>
                     )}
 
-                    
+
                     {activeTab === 'footer' && (
                         <div className="space-y-4">
                             <h2 className="text-lg font-bold font-mono mb-4">Footer</h2>
