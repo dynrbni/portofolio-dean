@@ -8,11 +8,10 @@ import TimelineSection from '@/components/TimelineSection';
 import ProjectsSection from '@/components/ProjectsSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import ConnectSection from '@/components/ConnectSection';
-import recentlyPlayedSection from '@/components/recentlyPlayedSection';
+import RecentlyPlayedSection from '@/components/recentlyPlayedSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 import ScrollIndicator from '@/components/ScrollIndicator';
-import RecentlyPlayedSection from '@/components/recentlyPlayedSection';
 
 export default function Home() {
   return (

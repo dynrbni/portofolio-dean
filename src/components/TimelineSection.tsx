@@ -1,15 +1,7 @@
 'use client';
 
 import { motion, Variants } from 'framer-motion';
-import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabase';
-
-interface TimelineItem {
-    id: string;
-    year: string;
-    title: string;
-    description: string;
-}
+import { timeline as timelineData } from '@/data/content';
 
 const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -41,18 +33,7 @@ const itemVariants: Variants = {
 };
 
 export default function TimelineSection() {
-    const [timeline, setTimeline] = useState<TimelineItem[]>([]);
-
-    useEffect(() => {
-        supabase.from('timeline').select('*').order('sort_order').then(({ data }) => {
-            if (data) {
-                const filtered = data.filter(item => item.title && item.title.trim() !== '' && item.year && item.year.trim() !== '');
-                setTimeline(filtered);
-            }
-        });
-    }, []);
-
-    if (timeline.length === 0) return null;
+    const timeline = timelineData;
 
     return (
         <section className="py-24 px-5 max-w-3xl mx-auto text-center">

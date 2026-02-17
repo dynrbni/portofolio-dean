@@ -1,17 +1,9 @@
 'use client';
 
 import { motion, Variants } from 'framer-motion';
-import { useEffect, useState, useCallback } from 'react';
-import { supabase } from '@/lib/supabase';
+import { useState, useCallback } from 'react';
+import { contact as contactData } from '@/data/content';
 import Toast from './ui/toast';
-
-interface ContactData {
-    email: string;
-    github_url: string;
-    linkedin_url: string;
-    twitter_url: string;
-    instagram_url: string;
-}
 
 const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -61,7 +53,7 @@ const socialItemVariants: Variants = {
 };
 
 export default function ContactSection() {
-    const [data, setData] = useState<ContactData | null>(null);
+    const data = contactData;
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -81,14 +73,6 @@ export default function ContactSection() {
     const hideToast = useCallback(() => {
         setToast(prev => ({ ...prev, isVisible: false }));
     }, []);
-
-    useEffect(() => {
-        supabase.from('contact').select('*').single().then(({ data }) => {
-            if (data) setData(data);
-        });
-    }, []);
-
-    if (!data) return null;
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();

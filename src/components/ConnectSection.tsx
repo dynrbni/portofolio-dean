@@ -2,12 +2,7 @@
 
 import { motion, Variants } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabase';
-
-interface ConnectData {
-    github_username: string;
-    contributions: string;
-}
+import { connect as connectData } from '@/data/content';
 
 const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -30,31 +25,20 @@ const itemVariants: Variants = {
 };
 
 export default function ConnectSection() {
-    const [data, setData] = useState<ConnectData | null>(null);
+    const [contributions, setContributions] = useState<string>('...');
+    const github_username = connectData.github_username;
 
     useEffect(() => {
-        supabase.from('connect').select('*').single().then(({ data: supabaseData }) => {
-            if (supabaseData) {
-                setData(supabaseData);
-
-                fetch(`https://github-contributions-api.jogruber.de/v4/${supabaseData.github_username}?y=last&t=${Date.now()}`, { cache: 'no-store' })
-                    .then(res => res.json())
-                    .then(json => {
-                        if (json?.contributions) {
-                            const total = json.contributions.reduce((acc: number, day: any) => acc + day.count, 0);
-
-                            setData(prev => prev ? ({
-                                ...prev,
-                                contributions: total.toString()
-                            }) : null);
-                        }
-                    })
-                    .catch(err => console.error("Failed to fetch contributions:", err));
-            }
-        });
-    }, []);
-
-    if (!data) return null;
+        fetch(`https://github-contributions-api.jogruber.de/v4/${github_username}?y=last&t=${Date.now()}`, { cache: 'no-store' })
+            .then(res => res.json())
+            .then(json => {
+                if (json?.contributions) {
+                    const total = json.contributions.reduce((acc: number, day: { count: number }) => acc + day.count, 0);
+                    setContributions(total.toString());
+                }
+            })
+            .catch(err => console.error("Failed to fetch contributions:", err));
+    }, [github_username]);
 
     return (
         <section className="py-24 px-5 max-w-4xl mx-auto text-center">
@@ -81,7 +65,7 @@ export default function ConnectSection() {
                     <div className="overflow-x-auto pb-4">
                         <div className="min-w-[700px] md:min-w-0">
                             <motion.img
-                                src={`https://ghchart.rshah.org/22c55e/${data.github_username}`}
+                                src={`https://ghchart.rshah.org/22c55e/${github_username}`}
                                 alt="GitHub Contributions"
                                 className="w-full mx-auto brightness-[0.85] invert hue-rotate-180 saturate-150"
                                 whileHover={{ scale: 1.02 }}
@@ -100,7 +84,7 @@ export default function ConnectSection() {
                             whileInView={{ scale: [1, 1.1, 1] }}
                             transition={{ duration: 0.5, delay: 0.5 }}
                         >
-                            {data.contributions}
+                            {contributions}
                         </motion.span> contributions in the last year
                     </motion.p>
                 </motion.div>

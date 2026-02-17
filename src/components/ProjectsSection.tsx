@@ -1,18 +1,7 @@
 'use client';
 
 import { motion, Variants } from 'framer-motion';
-import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabase';
-
-interface Project {
-    id: string;
-    name: string;
-    description: string;
-    tech: string[];
-    github_url: string;
-    live_url: string;
-    image_url: string;
-}
+import { projects as projectsData } from '@/data/content';
 
 const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -45,15 +34,7 @@ const cardVariants: Variants = {
 };
 
 export default function ProjectsSection() {
-    const [projects, setProjects] = useState<Project[]>([]);
-
-    useEffect(() => {
-        supabase.from('projects').select('*').order('sort_order').then(({ data }) => {
-            if (data) setProjects(data);
-        });
-    }, []);
-
-    if (projects.length === 0) return null;
+    const projects = projectsData;
 
     return (
         <section className="py-24 px-5 max-w-5xl mx-auto">

@@ -1,14 +1,7 @@
 'use client';
 
 import { motion, Variants } from 'framer-motion';
-import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabase';
-
-interface Skill {
-    id: string;
-    name: string;
-    sort_order: number;
-}
+import { skills as skillsData } from '@/data/content';
 
 const CssSvg = () => (
     <svg viewBox="0 0 24 24" className="w-12 h-12 fill-white opacity-60 group-hover:opacity-100 transition-all duration-300">
@@ -192,15 +185,7 @@ const iconVariants: Variants = {
 };
 
 export default function SkillsSection() {
-    const [skills, setSkills] = useState<Skill[]>([]);
-
-    useEffect(() => {
-        supabase.from('skills').select('*').order('sort_order').then(({ data }) => {
-            if (data) setSkills(data);
-        });
-    }, []);
-
-    if (skills.length === 0) return null;
+    const skills = skillsData;
 
     return (
         <section className="py-24 px-5 max-w-2xl mx-auto text-center">

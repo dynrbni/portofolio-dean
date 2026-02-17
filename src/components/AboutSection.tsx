@@ -1,15 +1,8 @@
 'use client';
 
 import { motion, Variants } from 'framer-motion';
-import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabase';
+import { about } from '@/data/content';
 import { BorderBeam } from "@/components/ui/border-beam";
-
-interface AboutData {
-    name: string;
-    age: string;
-    bio: string;
-}
 
 const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -41,15 +34,7 @@ const photoVariants: Variants = {
 };
 
 export default function AboutSection() {
-    const [data, setData] = useState<AboutData | null>(null);
-
-    useEffect(() => {
-        supabase.from('about').select('*').single().then(({ data }) => {
-            if (data) setData(data);
-        });
-    }, []);
-
-    if (!data) return null;
+    const data = about;
 
     return (
         <section className="py-24 px-5 max-w-3xl mx-auto text-center">
