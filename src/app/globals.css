@@ -270,30 +270,6 @@ button {
   font-size: 9px;
   padding: 9px 11px;
 }
-.tech-strip {
-  display: flex;
-  align-items: center;
-  gap: 60px;
-  border-block: 1px solid var(--line);
-  padding-block: 26px;
-}
-.tech-strip p {
-  color: var(--muted);
-  font-size: 10px;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  flex-shrink: 0;
-}
-.tech-strip > div {
-  display: flex;
-  justify-content: space-between;
-  gap: 32px;
-  flex: 1;
-}
-.tech-strip span {
-  font-size: 16px;
-  font-weight: 500;
-}
 .section-space {
   padding-block: 104px 110px;
 }
@@ -840,15 +816,6 @@ body:has(.project-dialog[open]) {
     font-size: 9px;
     flex-wrap: wrap;
   }
-  .tech-strip {
-    gap: 35px;
-  }
-  .tech-strip > div {
-    gap: 20px;
-  }
-  .tech-strip span {
-    font-size: 14px;
-  }
   .about-layout {
     gap: 50px;
   }
@@ -968,22 +935,6 @@ body:has(.project-dialog[open]) {
   .photo-note {
     font-size: 8px;
     bottom: 40px;
-  }
-  .tech-strip {
-    display: block;
-    padding-block: 23px;
-  }
-  .tech-strip p {
-    font-size: 9px;
-    margin-bottom: 18px;
-  }
-  .tech-strip > div {
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 14px 24px;
-  }
-  .tech-strip span {
-    font-size: 13px;
   }
   .section-space {
     padding-block: 65px;
@@ -1242,5 +1193,355 @@ body:has(.project-dialog[open]) {
   }
   .site-footer .back-top {
     justify-content: flex-end;
+  }
+}
+
+.tech-stack {
+  border-block: 1px solid var(--line);
+  padding-block: 27px 31px;
+}
+.stack-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+  margin-bottom: 25px;
+}
+.stack-heading .eyebrow {
+  color: var(--green);
+  font-size: 9px;
+  margin-bottom: 8px;
+}
+.stack-heading h2 {
+  font-size: 16px;
+  font-weight: 450;
+  letter-spacing: -0.3px;
+}
+.stack-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0 10px 10px;
+  min-height: 44px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 10px;
+  white-space: nowrap;
+}
+.stack-toggle:hover {
+  color: var(--green);
+}
+.stack-toggle > span {
+  font-size: 16px;
+}
+.stack-window {
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 4%,
+    #000 96%,
+    transparent
+  );
+}
+.stack-track {
+  display: flex;
+  width: max-content;
+  animation: stack-travel 38s linear infinite;
+}
+.stack-group {
+  display: flex;
+  align-items: center;
+  flex: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.stack-item {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 8px 30px;
+  min-height: 55px;
+}
+.stack-item img {
+  object-fit: contain;
+  flex: none;
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.stack-item:hover img {
+  transform: translateY(-4px) rotate(-8deg) scale(1.12);
+}
+.stack-item span {
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.stack-window:hover .stack-track,
+.stack-window[data-paused="true"] .stack-track {
+  animation-play-state: paused;
+}
+@keyframes stack-travel {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.hero-line {
+  display: block;
+  overflow: clip;
+  padding-bottom: 0.09em;
+  margin-bottom: -0.09em;
+}
+.hero-line > span,
+.hero-line > em {
+  display: block;
+}
+.hero-line:first-child > span {
+  animation: title-enter 1.05s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+.hero-line:last-child > em {
+  animation: title-enter 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.24s both;
+}
+.hero-eyebrow {
+  animation: soft-enter 0.7s ease-out both;
+}
+.hero-description {
+  animation: soft-enter 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.38s both;
+}
+.hero-actions {
+  animation: soft-enter 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+}
+.hero-location {
+  animation: soft-enter 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.62s both;
+}
+.hero-portrait {
+  animation: portrait-enter 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
+}
+.portrait-image img {
+  animation: portrait-settle 1.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.photo-note {
+  animation: note-drift 6s ease-in-out 1.5s infinite;
+}
+@keyframes title-enter {
+  from {
+    opacity: 0;
+    transform: translateY(115%) rotate(2deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(0);
+  }
+}
+@keyframes soft-enter {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes portrait-enter {
+  from {
+    opacity: 0;
+    transform: translateY(30px) rotate(2deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(0);
+  }
+}
+@keyframes portrait-settle {
+  from {
+    transform: scale(1.32);
+  }
+  to {
+    transform: scale(var(--portrait-scale, 1.15));
+  }
+}
+@keyframes note-drift {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+[data-reveal-pending] {
+  opacity: 0;
+}
+.button {
+  position: relative;
+  overflow: hidden;
+}
+.button > span {
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.button:hover > span {
+  transform: translate(3px, -3px);
+}
+.button-dark:hover > span {
+  transform: translate(3px, 3px);
+}
+.desktop-nav a {
+  position: relative;
+  padding-block: 7px;
+}
+.desktop-nav a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--green);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+.desktop-nav a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+.project-browser {
+  transition:
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.7s;
+}
+@media (hover: hover) and (pointer: fine) {
+  .project-visual:hover .project-browser {
+    transform: translateY(-8px) rotate(-1deg) scale(1.025);
+    box-shadow: 0 22px 32px #20221f24;
+  }
+  .service-row h3 {
+    transition:
+      transform 0.35s ease,
+      color 0.35s;
+  }
+  .service-row:hover h3 {
+    transform: translateX(7px);
+    color: var(--green);
+  }
+}
+.project-dialog[open] {
+  animation: dialog-enter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.project-dialog[open]::backdrop {
+  animation: backdrop-enter 0.35s ease;
+}
+.mobile-nav {
+  animation: soft-enter 0.3s ease both;
+}
+@keyframes dialog-enter {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes backdrop-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.scroll-progress {
+  display: none;
+}
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    z-index: 100;
+    pointer-events: none;
+    background: var(--green);
+    transform-origin: left;
+    animation: page-progress linear both;
+    animation-timeline: scroll(root);
+  }
+  @keyframes page-progress {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+}
+@media (max-width: 700px) {
+  .tech-stack {
+    padding-block: 22px;
+  }
+  .stack-heading {
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .stack-heading h2 {
+    font-size: 13px;
+    max-width: 185px;
+    line-height: 1.5;
+  }
+  .stack-heading .eyebrow {
+    font-size: 8px;
+    letter-spacing: 0.09em;
+  }
+  .stack-toggle {
+    font-size: 9px;
+    gap: 7px;
+  }
+  .stack-item {
+    gap: 10px;
+    padding-inline: 21px;
+  }
+  .stack-item img {
+    width: 29px;
+    height: 29px;
+  }
+  .stack-item span {
+    font-size: 13px;
+  }
+  .portrait-image {
+    --portrait-scale: 1.1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal-pending] {
+    opacity: 1;
+  }
+  .stack-toggle,
+  .stack-group[aria-hidden="true"],
+  .scroll-progress {
+    display: none;
+  }
+  .stack-window {
+    overflow: visible;
+    mask-image: none;
+  }
+  .stack-track {
+    width: 100%;
+    transform: none;
+  }
+  .stack-group {
+    flex-wrap: wrap;
+    gap: 10px 0;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .stack-item {
+    padding-inline: 10px;
   }
 }

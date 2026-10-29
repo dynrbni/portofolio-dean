@@ -2,6 +2,8 @@ import Image from "next/image";
 import PortfolioNav from "@/components/PortfolioNav";
 import ProjectGallery from "@/components/ProjectGallery";
 import CopyEmail from "@/components/CopyEmail";
+import TechStack from "@/components/TechStack";
+import MotionEffects from "@/components/MotionEffects";
 import { profile, services } from "@/data/portfolio";
 
 export default function Home() {
@@ -10,6 +12,7 @@ export default function Home() {
       <a className="skip-link" href="#main">
         Skip to content
       </a>
+      <MotionEffects />
       <PortfolioNav />
       <main id="main">
         <section
@@ -23,9 +26,12 @@ export default function Home() {
               Independent fullstack developer
             </p>
             <h1 id="hero-heading">
-              Thoughtful code.
-              <br />
-              <em>Real-world impact.</em>
+              <span className="hero-line">
+                <span>Thoughtful code.</span>
+              </span>
+              <span className="hero-line">
+                <em>Real-world impact.</em>
+              </span>
             </h1>
             <p className="hero-description">
               Hi, I’m Dean. I turn complex ideas into websites and software that
@@ -63,16 +69,7 @@ export default function Home() {
             </span>
           </figure>
         </section>
-        <div className="tech-strip container">
-          <p>A few tools of the trade</p>
-          <div>
-            <span>Next.js</span>
-            <span>React</span>
-            <span>TypeScript</span>
-            <span>Node.js</span>
-            <span>PostgreSQL</span>
-          </div>
-        </div>
+        <TechStack />
         <section
           className="work-section container section-space"
           id="work"
@@ -82,7 +79,7 @@ export default function Home() {
             <span>Selected work</span>
             <span>Ideas, brought to life.</span>
           </div>
-          <div className="section-heading">
+          <div className="section-heading" data-reveal>
             <h2 id="work-heading">
               Built for the
               <br />
@@ -101,7 +98,7 @@ export default function Home() {
           aria-labelledby="about-heading"
         >
           <div className="container about-layout">
-            <div className="about-aside">
+            <div className="about-aside" data-reveal>
               <p className="eyebrow">The person behind the code</p>
               <div className="about-monogram" aria-hidden="true">
                 dr<span>.</span>
@@ -112,7 +109,7 @@ export default function Home() {
                 Intentional by practice.
               </p>
             </div>
-            <div className="about-copy">
+            <div className="about-copy" data-reveal>
               <h2 id="about-heading">
                 A developer who sees
                 <br />
@@ -155,7 +152,7 @@ export default function Home() {
             <span>How I can help</span>
             <span>From an idea to something useful.</span>
           </div>
-          <div className="section-heading">
+          <div className="section-heading" data-reveal>
             <h2 id="services-heading">
               Your next idea.
               <br />
@@ -168,7 +165,7 @@ export default function Home() {
           </div>
           <div className="service-list">
             {services.map((service) => (
-              <article className="service-row" key={service.number}>
+              <article className="service-row" data-reveal key={service.number}>
                 <span className="service-number">{service.number}</span>
                 <h3>{service.name}</h3>
                 <div>
@@ -178,7 +175,7 @@ export default function Home() {
               </article>
             ))}
           </div>
-          <div className="working-together">
+          <div className="working-together" data-reveal>
             <span className="eyebrow">Working together</span>
             <p>
               We start with your goals, define what needs to be built, and keep
@@ -195,19 +192,19 @@ export default function Home() {
           aria-labelledby="contact-heading"
         >
           <div className="container">
-            <div className="contact-top">
+            <div className="contact-top" data-reveal>
               <p className="eyebrow">
                 <span className="status-dot" />
                 Let’s make something useful
               </p>
               <span>Have an idea? I’d love to hear it.</span>
             </div>
-            <h2 id="contact-heading">
+            <h2 id="contact-heading" data-reveal>
               Good things start
               <br />
               with <em>a conversation.</em>
             </h2>
-            <div className="contact-bottom">
+            <div className="contact-bottom" data-reveal>
               <div>
                 <a
                   className="email-link"

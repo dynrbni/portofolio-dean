@@ -30,3 +30,7 @@ Featured projects: PoundasiERP, Attala Wedding, TamiasPOS, and PorLapor. The pro
 ## Deployment
 
 Push to the existing GitHub repository and use its configured hosting integration. No API keys or environment variables are required for the portfolio.
+
+## Stack logos and motion
+
+Technology logos are local SVG assets from [Devicon v2.17.0](https://github.com/devicons/devicon/tree/v2.17.0), with its MIT license retained in `public/stack/LICENSE`. The stack rail has pause/resume controls. Hero entrances, scroll reveals, project interactions, and dialog transitions respect `prefers-reduced-motion`; all content remains available without JavaScript.

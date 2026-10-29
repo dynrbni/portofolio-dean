@@ -38,9 +38,9 @@ export default function ProjectGallery() {
           {String(visible.length).padStart(2, "0")} projects
         </span>
       </div>
-      <div className="project-grid">
+      <div className="project-grid" key={filter}>
         {visible.map((project, index) => (
-          <article className="project" key={project.name}>
+          <article className="project" key={project.name} data-reveal>
             <button
               className={`project-visual ${project.tone}`}
               onClick={() => openProject(project)}
