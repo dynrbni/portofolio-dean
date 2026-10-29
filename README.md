@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Dean Rabbani · Portfolio
 
-## Getting Started
+A responsive portfolio for Dean Rabbani, an independent fullstack developer based in Depok, Indonesia. Built with Next.js 16, React 19, TypeScript, and CSS.
 
-First, run the development server:
+## Development
 
 ```bash
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run lint
+npm run build
+npm start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Content
 
-## Learn More
+Edit `src/data/portfolio.ts` for projects, contact details, and services. Main sections live in `src/app/page.tsx`, with design tokens and responsive styles in `src/app/globals.css`.
 
-To learn more about Next.js, take a look at the following resources:
+Featured projects: PoundasiERP, Attala Wedding, TamiasPOS, and PorLapor. The project gallery supports category filtering and accessible native dialog previews. Contact links open an email application; the copy action includes success and failure feedback.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Images
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+`public/images/dean-ciremai.webp` is the photograph supplied by Dean. Attala Wedding and TamiasPOS images are screenshots of their live websites. PoundasiERP shows the public application sign-in screen. PorLapor was captured from the local project preview. Screenshots were captured on October 29, 2026. They are previews, not claims about customer numbers or product performance.
 
-## Deploy on Vercel
+## Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Push to the existing GitHub repository and use its configured hosting integration. No API keys or environment variables are required for the portfolio.
